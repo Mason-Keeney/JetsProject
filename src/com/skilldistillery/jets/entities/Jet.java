@@ -9,8 +9,19 @@ public abstract class Jet {
 	private double speed;
 	private int range;
 	private long price;
+	private Pilot pilot = new Pilot();
 	
 	
+	
+	public Jet() {}
+	
+	public Jet(String model, double speed, int range, long price) {
+		this.model = model;
+		this.speed = speed;
+		this.range = range;
+		this.price = price;
+	}
+
 	public abstract void fly();
 	
 	public String getModel() {
@@ -21,13 +32,13 @@ public abstract class Jet {
 	private String generateID() {
 		String newId = "";
 		StringBuilder sb = new StringBuilder();
-		sb.append(((idShift + 1) % 10) + "-");
+		sb.append(((idShift + 1) % 21) + "-");
 		
 
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i < 7; i++) {
 			int random = (int)Math.round(Math.random() * (idShift + 3));
 				sb.append(((random * (i + idShift)) % 10));	
-				if (i % 3 == 0 && i != 9) {
+				if (i % 3 == 0 && i != 6) {
 					sb.append('-');
 				}
 		}
@@ -40,7 +51,14 @@ public abstract class Jet {
 		return newId;
 	}
 
-
+	public Pilot getPilot() {
+		return pilot;
+	}
+	
+	public void setPilot(Pilot pilot) {
+		this.pilot = pilot;
+	}
+	
 	public String getID() {
 		return ID;
 	}
@@ -84,7 +102,7 @@ public abstract class Jet {
 	
 	@Override
 	public String toString() {
-		return "Jet [ID: " + ID + " | Model: " + model + " | Speed: " + speed + " | Range: " + range + "| Price: " + price + "]";
+		return "Jet [ID: " + ID + " | Pilot: " + pilot.getName() + " | Model: " + model + " | Speed: " + speed + " | Range: " + range + "| Price: " + price + "]";
 	}
 
 
