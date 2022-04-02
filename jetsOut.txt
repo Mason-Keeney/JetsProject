@@ -1,0 +1,7 @@
+PassengerJet	Cessna 172	150.0	100	12000	Quimby
+FighterJet	F-35	1000.0	250	11000000	Warlock
+CargoPlane	Boeing C-17	200.0	500	350000	Hank
+FighterJet	F-22	800.0	250	9000000	Warlock
+CargoPlane	Boeing 747-C	400.0	300	450000	Slayer
+FighterJet	F-35	1500.0	500	15000000	Cochran
+PassengerJet	Boeing 747	250.0	1000	450000	Amy
