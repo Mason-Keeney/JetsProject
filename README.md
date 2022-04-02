@@ -2,7 +2,7 @@
 
 ### Week 3 Weekend Project Skill Distillery
 
-##Overview
+## Overview
 The JetsApplication software allows a user to scroll through 2 different menus with a variety of choices. There are 6 options in the first menu:
 1. View Jet Menu
 2. DOGFIIIIIIIIGHT!!
