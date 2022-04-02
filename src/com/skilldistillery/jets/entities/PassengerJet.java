@@ -1,7 +1,10 @@
 package com.skilldistillery.jets.entities;
 
 public class PassengerJet extends Jet {
-
+	private final String defaultModel = "Boeing 747";
+	private final double defaultSpeed = 250;
+	private final int defaultRange = 1000;
+	private final long defaultPrice = 450000;
 	
 	
 	public PassengerJet() {
@@ -17,5 +20,13 @@ public class PassengerJet extends Jet {
 	@Override
 	public void fly() {
 		System.out.println("I'm flying!");
+	}
+	
+	@Override
+	protected void setDefaultValues() {
+		this.setModel(defaultModel);
+		this.setSpeed(defaultSpeed);
+		this.setRange(defaultRange);
+		this.setPrice(defaultPrice);
 	}
 }

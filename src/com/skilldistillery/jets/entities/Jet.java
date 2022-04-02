@@ -124,6 +124,8 @@ public abstract class Jet {
 		return Objects.equals(ID, other.ID) && Objects.equals(model, other.model) && price == other.price
 				&& range == other.range && Double.doubleToLongBits(speed) == Double.doubleToLongBits(other.speed);
 	}
+
+	protected abstract void setDefaultValues();
 	
 
 }

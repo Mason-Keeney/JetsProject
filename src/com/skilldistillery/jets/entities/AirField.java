@@ -1,12 +1,14 @@
 package com.skilldistillery.jets.entities;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class AirField {
-	private List<Jet> jets;
-	private MainMenu menu = new MainMenu();
+	private List<Jet> jets = new ArrayList<>();
 
 	public List<Jet> getJets() {
 		return jets;
@@ -27,9 +29,22 @@ public class AirField {
 	}
 
 	public void viewJet(String selection) {
+		Jet tempJet = jets.get(0);
 		if (selection.equals("fastest")) {
+			for (Jet jet : jets) {
+				if (jet.getSpeed() > tempJet.getSpeed()) {
+					tempJet = jet;
+				}
+			}
+			System.out.println(tempJet);
 
 		} else if (selection.equals("longest")) {
+			for (Jet jet : jets) {
+				if (jet.getRange() > tempJet.getRange()) {
+					tempJet = jet;
+				}
+			}
+			System.out.println(tempJet);
 
 		}
 
@@ -80,20 +95,18 @@ public class AirField {
 	}
 
 	public void addJet(Scanner sc, SubMenu submenu) {
-		System.out.println("Do you want to create a Fighter Jet, a Cargo Plane or a Passenger Jet?");
-		Jet jetType = submenu.newJetMenu(sc.nextLine());
-		System.out.println("What is the model name of the jet?");
-		jetType.setModel(sc.nextLine());
-		System.out.println("Do you want to use the default values for the remaining fields, or set them?");
-		jetType = submenu.setJetValues(sc, jetType.getModel());
+		System.out.println("Do you want to create a (1)Fighter Jet, a (2)Cargo Plane or a (3)Passenger Jet?");
+		Jet jetType = submenu.newJetSwitch(sc.nextLine().toLowerCase());
+		System.out.println("Do you want to use the (1)default values for the remaining fields, or (2)set them?");
+		jetType = submenu.setJetValues(sc, sc.nextLine().toLowerCase(), jetType);
 		
 		jets.add(jetType);
 	}
 
 	public void removeJet(Scanner sc, SubMenu submenu) {
-		System.out.println("Which jet would you like to remove?");
+		System.out.println("Which jet would you like to remove? (please enter the ID)");
 		list();
-		Jet removeMe = submenu.removeJet(sc.nextLine());
+		Jet removeMe = submenu.selectJet(sc.nextLine().toLowerCase(), this, sc);
 		for (int index = 0; index < jets.size(); index++) {
 			if (jets.get(index).equals(removeMe)) {
 				jets.remove(jets.get(index));
@@ -102,8 +115,18 @@ public class AirField {
 
 	}
 
-	public void createCopy() {
-		// TODO Auto-generated method stub
+	public boolean createCopy(String fileName) {
+		
+		try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))){
+			for (Jet jet : jets) {
+				pw.println(jet.getClass().getSimpleName() + "\t" + jet.getModel() 
+					+ "\t" + jet.getSpeed() + "\t" + jet.getRange()+ "\t" + jet.getPrice() + "\t" + jet.getPilot().getName());
+			}
+		} catch (IOException e) {
+			System.out.println("There was a problem while writing to " +  fileName);
+			return false;
+		}
+		return true;
 
 	}
 
@@ -119,12 +142,8 @@ public class AirField {
 
 	}
 
-	public String viewPilot(Scanner sc, SubMenu submenu) {
-		
-
-		submenu.printPilotMenu();
-		return sc.nextLine();
-
+	public void viewPilot(Jet jet) {
+		System.out.println(jet.getPilot());
 	}
 
 	public String hirePilot(Scanner sc, SubMenu submenu) {
@@ -177,8 +196,5 @@ public class AirField {
 
 	}
 
-	public void viewAll() {
-		// TODO Auto-generated method stub
 
-	}
 }

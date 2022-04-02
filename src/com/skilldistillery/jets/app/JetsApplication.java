@@ -56,10 +56,10 @@ public class JetsApplication {
 						tempJets.add(new FighterJet(model, speed, range, price));
 
 					} else if (splitComma[0].equals("CargoPlane")) {
-						tempJets.add(new FighterJet(model, speed, range, price));
+						tempJets.add(new CargoPlane(model, speed, range, price));
 
 					} else if (splitComma[0].equals("PassengerJet")) {
-						tempJets.add(new FighterJet(model, speed, range, price));
+						tempJets.add(new PassengerJet(model, speed, range, price));
 					}
 			}
 

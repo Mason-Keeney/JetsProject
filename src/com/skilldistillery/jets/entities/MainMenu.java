@@ -29,6 +29,7 @@ public class MainMenu {
 			submenu.printJetMenu();
 			while(submenu.jetMenuSwitch(airfield, sc.nextLine(), sc));
 			printMenu();
+			break;
 		
 		case "2":
 		case "dogfight":
@@ -61,10 +62,13 @@ public class MainMenu {
 		case "create copy":
 		case "print to file":
 		case "copy":
-			airfield.createCopy();
+			System.out.println("What is the name of the file? (Do not include quotation marks, or use the name jets.txt)");
+			String fileName = sc.nextLine();
+			if(airfield.createCopy(fileName)) {
+				System.out.println("Printed to: " + fileName);
+			}
+			printMenu();
 			break;
-			
-		
 			
 		case "6":
 		case "quit":
@@ -73,7 +77,8 @@ public class MainMenu {
 			isSelecting = false;
 			return isSelecting;
 	
-	
+		default:
+			System.out.print("Invalid Option, please enter a valid option: ");
 			
 		}
 				
