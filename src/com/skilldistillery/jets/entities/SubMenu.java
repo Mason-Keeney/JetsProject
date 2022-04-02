@@ -4,60 +4,83 @@ import java.util.Scanner;
 
 public class SubMenu {
 
-	public Jet selectJet(String input, AirField airfield, Scanner sc) {
+	public Jet selectJet(AirField airfield, Scanner sc) {
 		boolean isSelecting = true;
-		Jet jet = new PassengerJet();
+		int numberOfJets = airfield.getJets().size();
+		Jet tempJet = new PassengerJet();
+		String in = sc.nextLine();
+
 		while (isSelecting) {
 
-			for (int i = 0; i < airfield.getJets().size() - 1; i++) {
-				if (input.equals(airfield.getJet(i).getModel()) || input.equals(airfield.getJet(i).getID())) {
-					jet = airfield.getJet(i);
+			for (int i = 0; i < numberOfJets; i++) {
+
+				if (in.equals((i + 1 + "")) || in.equals(airfield.getJet(i).getID())) {
+					tempJet = airfield.getJet(i);
 					isSelecting = false;
-				} else if (i < airfield.getJets().size() - 1) {
+					break;
+
+				} else if (i < numberOfJets - 1) {
 					continue;
+
 				} else {
 					System.out.println("Please select a different Jet");
-					input = sc.nextLine();
+					in = sc.nextLine();
 					continue;
 				}
 			}
 		}
 
-		return jet;
+		return tempJet;
 
 	}
 
-	void printSelectJetMenu(AirField airfield, Scanner sc) {
-		System.out.println("Please type the model or ID Number of the jet you would like to fly: ");
-		for (int i = 0; i < airfield.getJets().size() - 1; i++) {
-			System.out.println(airfield.getJet(i));
+	void printSelectJetMenu(AirField airfield) {
+		for (int i = 0; i < airfield.getJets().size(); i++) {
+			System.out.println((i + 1) + ": " + airfield.getJet(i));
+
+			if (i != (airfield.getJets().size() - 1)) {
+				System.out.println();
+			}
 		}
 
 	}
 
-	public Jet newJetSwitch(String input) {
-		Jet jet;
-		switch (input) {
-		case "1":
-		case "fighter jet":
-		case "fighter":
-		case "fighterjet":
-			jet = new FighterJet();
-		case "2":
-		case "cargo plane":
-		case "cargo":
-		case "cargoplane":
-			jet = new CargoPlane();
-		case "3":
-		case "passenger jet":
-		case "passenger":
-		case "passengerjet":
-			jet = new PassengerJet();
-		default:
-			jet = new PassengerJet();
+	public Jet newJetSwitch(Scanner sc) {
+		Jet jet = new PassengerJet();
+		String input = sc.nextLine().toLowerCase();
+		boolean isSelecting = true;
+		while (isSelecting) {
+
+			switch (input) {
+
+			case "1":
+			case "fighter jet":
+			case "fighter":
+			case "fighterjet":
+				jet = new FighterJet();
+				isSelecting = false;
+				break;
+			case "2":
+			case "cargo plane":
+			case "cargo":
+			case "cargoplane":
+				jet = new CargoPlane();
+				isSelecting = false;
+				break;
+			case "3":
+			case "passenger jet":
+			case "passenger":
+			case "passengerjet":
+				jet = new PassengerJet();
+				isSelecting = false;
+				break;
+			default:
+				System.out.println("Invalid Selection, please choose a valid Jet");
+				input = sc.nextLine();
+
+			}
 		}
-		
-		
+
 		return jet;
 	}
 
@@ -81,18 +104,14 @@ public class SubMenu {
 	}
 
 	public void printJetMenu() {
-		System.out.println("-----------------------------------------------");
-		System.out.println("| 1. List Jets in Airfield                    |");
-		System.out.println("| 2. Fly a Jet                                |");
-		System.out.println("| 3. Fly all Jets                             |");
-		System.out.println("| 4. Veiw the Fastest Jet                     |");
-		System.out.println("| 5. View the Jet with the Longest Range      |");
-		System.out.println("| 6. Load all Cargo Jets                      |");
-		System.out.println("| 7. Add a Jet to the Airfield                |");
-		System.out.println("| 8. Remove a Jet from the Airfield           |");
-		System.out.println("| 9. Show Menu                                |");
-		System.out.println("| 10. Return to Main Menu                     |");
-		System.out.println("-----------------------------------------------");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("|                          Select an Option                     |");
+		System.out.println("| 1. List Jets in Airfield         |    6. Load all Cargo Jets  |");
+		System.out.println("| 2. Fly a Jet                     |    7. Add a Jet            |");
+		System.out.println("| 3. Fly all Jets                  |    8. Remove a Jet         |");
+		System.out.println("| 4. Veiw the Fastest              |    9. Show Menu            |");
+		System.out.println("| 5. View the highest Range        |    10. Return to Main Menu |");
+		System.out.println("-----------------------------------------------------------------");
 	}
 
 	public boolean jetMenuSwitch(AirField airfield, String input, Scanner sc) {
@@ -114,10 +133,10 @@ public class SubMenu {
 			case "fly a jet":
 			case "fly that jet":
 			case "fly jet":
-				System.out.println("Which jet would you like to fly?");
-				printSelectJetMenu(airfield, sc);
-				Jet jet = selectJet(sc.nextLine(), airfield, sc);
-				airfield.flyJet(jet);
+				System.out.println("Which jet would you like to fly? (Enter the ID number)");
+				printSelectJetMenu(airfield);
+				Jet jet = selectJet(airfield, sc);
+				jet.fly();
 				showMenuOption();
 				input = sc.nextLine();
 				continue;
@@ -188,7 +207,7 @@ public class SubMenu {
 			case "return to main menu":
 				isSelecting = false;
 				return isSelecting;
-				
+
 			default:
 				System.out.print("Invalid Option, please enter a valid option: ");
 				input = sc.nextLine();
@@ -197,62 +216,6 @@ public class SubMenu {
 		return isSelecting;
 
 	}
-
-	public void printPilotMenu() {
-		System.out.println("-----------------------------------------------");
-		System.out.println("| 1. View a Jet's Pilot                      |");
-		System.out.println("| 2. View all current Pilots                 |");
-		System.out.println("| 3. Hire a Pilot                            |");
-		System.out.println("| 4. Return to Main Menu                     |");
-		System.out.println("-----------------------------------------------");
-	}
-
-	public boolean pilotMenuSwitch(AirField airfield, String input, Scanner sc) {
-		boolean isSelecting = true;
-
-		while (isSelecting) {
-			switch (input) {
-
-			case "1":
-			case "view a pilot":
-			case "view pilot":
-				System.out.println("Which jet's pilot do you want to view details on?");
-				printSelectJetMenu(airfield, sc);
-				Jet jet = selectJet(sc.nextLine(), airfield, sc);
-				airfield.viewPilot(jet);
-				input = sc.nextLine();
-				continue;
-
-			case "2":
-			case "view all pilots":
-			case "view pilots":
-				airfield.viewAllPilots(airfield.getJets());
-				input = sc.nextLine();
-				continue;
-
-			case "3":
-			case "hire pilot":
-			case "new pilot":
-			case "hire new pilot":
-				input = airfield.hirePilot(sc, this);
-				continue;
-
-			case "4":
-			case "quit":
-			case "return":
-			case "return to main menu":
-				isSelecting = false;
-				return isSelecting;
-				
-			default:
-				System.out.print("Invaild Option, please enter a valid option: ");
-				input = sc.nextLine();
-
-			}
-		}
-		return isSelecting;
-	}
-
 
 	private void showMenuOption() {
 		System.out.println("(Enter 9 or type \"menu\" to show the menu again)");

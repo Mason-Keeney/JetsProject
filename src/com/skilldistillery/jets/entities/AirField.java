@@ -23,9 +23,7 @@ public class AirField {
 	}
 
 	public boolean addJet(Jet jet) {
-
 		return (jets.add(jet));
-
 	}
 
 	public void viewJet(String selection) {
@@ -37,6 +35,8 @@ public class AirField {
 				}
 			}
 			System.out.println(tempJet);
+			System.out
+					.println("It is capable of " + Math.round(tempJet.getMachSpeed() * 100) + "% the speed of sound\n");
 
 		} else if (selection.equals("longest")) {
 			for (Jet jet : jets) {
@@ -57,15 +57,10 @@ public class AirField {
 
 	}
 
-	public void flyJet(Jet jet) {
-		jet.fly();
-
-	}
-
 	public void list() {
 
 		for (Jet jet : jets) {
-			System.out.println(jet);
+			System.out.println(jet + "\n");
 		}
 
 	}
@@ -96,17 +91,17 @@ public class AirField {
 
 	public void addJet(Scanner sc, SubMenu submenu) {
 		System.out.println("Do you want to create a (1)Fighter Jet, a (2)Cargo Plane or a (3)Passenger Jet?");
-		Jet jetType = submenu.newJetSwitch(sc.nextLine().toLowerCase());
+		Jet jetType = submenu.newJetSwitch(sc);
 		System.out.println("Do you want to use the (1)default values for the remaining fields, or (2)set them?");
 		jetType = submenu.setJetValues(sc, sc.nextLine().toLowerCase(), jetType);
-		
+
 		jets.add(jetType);
 	}
 
 	public void removeJet(Scanner sc, SubMenu submenu) {
-		System.out.println("Which jet would you like to remove? (please enter the ID)");
-		list();
-		Jet removeMe = submenu.selectJet(sc.nextLine().toLowerCase(), this, sc);
+		System.out.println("Which jet would you like to remove?");
+		submenu.printSelectJetMenu(this);
+		Jet removeMe = submenu.selectJet(this, sc);
 		for (int index = 0; index < jets.size(); index++) {
 			if (jets.get(index).equals(removeMe)) {
 				jets.remove(jets.get(index));
@@ -116,49 +111,33 @@ public class AirField {
 	}
 
 	public boolean createCopy(String fileName) {
-		
-		try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))){
+
+		try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
 			for (Jet jet : jets) {
-				pw.println(jet.getClass().getSimpleName() + "\t" + jet.getModel() 
-					+ "\t" + jet.getSpeed() + "\t" + jet.getRange()+ "\t" + jet.getPrice() + "\t" + jet.getPilot().getName());
+				pw.println(jet.getClass().getSimpleName() + "\t" + jet.getModel() + "\t" + jet.getSpeed() + "\t"
+						+ jet.getRange() + "\t" + jet.getPrice() + "\t" + jet.getPilot().getName());
 			}
 		} catch (IOException e) {
-			System.out.println("There was a problem while writing to " +  fileName);
+			System.out.println("There was a problem while writing to " + fileName);
 			return false;
 		}
 		return true;
 
 	}
 
-	public List<Jet> viewAllPilots(List<Jet> jetsList) {
-		
-		
-		for (int i = 0; i < jetsList.size(); i++) {
-			System.out.println(jetsList.get(i).getPilot() + " Pilots: " 
-					+ jetsList.get(i).getModel() + " ID: " + jetsList.get(i).getID());
-		}
-		
-		return jetsList;
-
-	}
-
-	public void viewPilot(Jet jet) {
-		System.out.println(jet.getPilot());
-	}
-
-	public String hirePilot(Scanner sc, SubMenu submenu) {
+	public void hirePilot(Scanner sc, SubMenu submenu) {
 		Pilot toHire = new Pilot();
 		Pilot[] pilotArr = new Pilot[5];
 		for (int i = 0; i < 5; i++) {
 			pilotArr[i] = new Pilot();
 		}
-		
-		System.out.println("Which pilot do you want to hire?");
-		
+
+		System.out.println("Which pilot do you want to hire?\n");
+
 		for (int i = 0; i < pilotArr.length; i++) {
-			System.out.println((i+1) + ": " + pilotArr[i]);
+			System.out.println((i + 1) + ": " + pilotArr[i]);
 		}
-		
+
 		int input = sc.nextInt();
 		switch (input) {
 		case 1:
@@ -167,7 +146,7 @@ public class AirField {
 		case 2:
 			toHire = pilotArr[1];
 			break;
-		case 3: 
+		case 3:
 			toHire = pilotArr[2];
 			break;
 		case 4:
@@ -177,24 +156,17 @@ public class AirField {
 			toHire = pilotArr[4];
 		}
 		sc.nextLine();
-		
-		System.out.println("Type the ID of the jet you want to hire them for");
-		List<Jet> replaceArr = viewAllPilots(jets);
-		
-		String pilotOut = sc.nextLine();
-		for (int i = 0; i < replaceArr.size(); i++) {
-			if ( pilotOut.equals( replaceArr.get(i).getID() ) ) {
-				replaceArr.get(i).setPilot(toHire);
+
+		System.out.println("Select the jet you want to hire them for\n");
+		submenu.printSelectJetMenu(this);
+		Jet pilotOut = submenu.selectJet(this, sc);
+
+		for (Jet jet : jets) {
+			if (pilotOut.equals(jet)) {
+				jet.setPilot(toHire);
 			}
-			
-			
 		}
-		
-		submenu.printPilotMenu();
-		return sc.nextLine();
-		
 
 	}
-
 
 }

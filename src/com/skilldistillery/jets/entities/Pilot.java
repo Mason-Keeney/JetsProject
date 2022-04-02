@@ -6,16 +6,16 @@ public class Pilot {
 	private String name = setName();
 	private final int yearsOfExperience = setYearsOfExperience();
 	private final double salary = setSalary();
-	
+
 	private double setSalary() {
 		double salaryByYears = 0;
 		salaryByYears = 67500 + ((yearsOfExperience * 2) * 4000);
-		
+
 		return salaryByYears;
 	}
 
 	private int setYearsOfExperience() {
-		int randomYears = ((int)(Math.random() * 25) + 1);
+		int randomYears = ((int) (Math.random() * 25) + 1);
 		return randomYears;
 	}
 
@@ -24,23 +24,24 @@ public class Pilot {
 	}
 
 	public String setName() {
-		String[] names = {"Jeff", "Billybob", "Maverick", "Goose", "Iceman", "Viper", "Wolfman", "Merlin", "Hollywood","Pheonix",
-				"Slayer", "Warlock", "Earhart", "Cochran", "Coleman", "Quimby"};
-		int randomChoice = (int)(Math.random() * (names.length - 1));
-		
+		String[] names = { "Jeff", "Billybob", "Maverick", "Goose", "Iceman", "Viper", "Wolfman", "Merlin", "Hollywood",
+				"Pheonix", "Slayer", "Warlock", "Earhart", "Cochran", "Coleman", "Quimby", "Lindbergh", "Doolittle",
+				"Hartman", "Bob", "Amy", "George", "Hank", "Jessica", "James", "Haley", "Sally", "Damien", "Quinton",
+				"Hubert" };
+		int randomChoice = (int) (Math.random() * (names.length - 1));
+
 		String randomName = names[randomChoice];
-		
-		
+
 		return randomName;
-		
+
 	}
 
 	public int getYearsOfExperience() {
 		return yearsOfExperience;
 	}
-	
+
 	public double getSalary() {
-		
+
 		return salary;
 	}
 
@@ -67,6 +68,5 @@ public class Pilot {
 	public String toString() {
 		return "Pilot [Name: " + name + " | Flying for: " + yearsOfExperience + " years | Salary: " + salary + "]";
 	}
-	
-	
+
 }

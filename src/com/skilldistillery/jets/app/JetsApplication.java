@@ -45,22 +45,22 @@ public class JetsApplication {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 			String line;
 			while ((line = br.readLine()) != null) {
-				
+
 				String[] splitComma = line.split(",");
 				String model = splitComma[1];
 				double speed = Double.parseDouble(splitComma[2]);
 				int range = Integer.parseInt(splitComma[3]);
 				long price = Long.parseLong(splitComma[4]);
 
-					if (splitComma[0].equals("FighterJet")) {
-						tempJets.add(new FighterJet(model, speed, range, price));
+				if (splitComma[0].equals("FighterJet")) {
+					tempJets.add(new FighterJet(model, speed, range, price));
 
-					} else if (splitComma[0].equals("CargoPlane")) {
-						tempJets.add(new CargoPlane(model, speed, range, price));
+				} else if (splitComma[0].equals("CargoPlane")) {
+					tempJets.add(new CargoPlane(model, speed, range, price));
 
-					} else if (splitComma[0].equals("PassengerJet")) {
-						tempJets.add(new PassengerJet(model, speed, range, price));
-					}
+				} else if (splitComma[0].equals("PassengerJet")) {
+					tempJets.add(new PassengerJet(model, speed, range, price));
+				}
 			}
 
 		} catch (FileNotFoundException e) {
@@ -68,7 +68,7 @@ public class JetsApplication {
 		} catch (IOException e) {
 			System.out.println("Problem while reading: " + fileName);
 		}
-		
+
 		airfield.setJets(tempJets);
 
 	}

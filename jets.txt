@@ -1,5 +1,5 @@
 PassengerJet,Cessna 172,150,100,12000
-FighterJet,F35,1000,250,11000000
+FighterJet,F-35,1000,250,11000000
 CargoPlane,Boeing C-17,200,500,350000
-FighterJet,F22,800,250,9000000
+FighterJet,F-22,800,250,9000000
 CargoPlane,Boeing 747-C,400,300,450000
