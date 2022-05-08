@@ -2,7 +2,10 @@ package com.skilldistillery.jets.entities;
 
 import java.util.Scanner;
 
+import com.skilldistillery.jets.app.JetsApplication;
+
 public class SubMenu {
+	
 
 	public Jet selectJet(AirField airfield, Scanner sc) {
 		boolean isSelecting = true;
@@ -34,13 +37,10 @@ public class SubMenu {
 
 	}
 
-	void printSelectJetMenu(AirField airfield) {
+	public void printSelectJetMenu(AirField airfield) {
 		for (int i = 0; i < airfield.getJets().size(); i++) {
 			System.out.println((i + 1) + ": " + airfield.getJet(i));
 
-			if (i != (airfield.getJets().size() - 1)) {
-				System.out.println();
-			}
 		}
 
 	}
@@ -114,8 +114,9 @@ public class SubMenu {
 		System.out.println("-----------------------------------------------------------------");
 	}
 
-	public boolean jetMenuSwitch(AirField airfield, String input, Scanner sc) {
+	public void jetMenuSwitch(AirField airfield, Scanner sc, JetsApplication app) {
 		boolean isSelecting = true;
+		String input = sc.nextLine();
 		while (isSelecting) {
 
 			switch (input) {
@@ -171,7 +172,7 @@ public class SubMenu {
 			case "load planes":
 			case "load cargo":
 			case "load cargo planes":
-				airfield.loadCargoPlanes();
+				app.loadCargoPlanes();
 				showMenuOption();
 				input = sc.nextLine();
 				continue;
@@ -179,7 +180,7 @@ public class SubMenu {
 			case "7":
 			case "add jet":
 			case "add a jet":
-				airfield.addJet(sc, this);
+				app.addJet(sc, this);
 				showMenuOption();
 				input = sc.nextLine();
 				continue;
@@ -206,15 +207,13 @@ public class SubMenu {
 			case "return":
 			case "return to main menu":
 				isSelecting = false;
-				return isSelecting;
+				return;
 
 			default:
 				System.out.print("Invalid Option, please enter a valid option: ");
 				input = sc.nextLine();
 			}
 		}
-		return isSelecting;
-
 	}
 
 	private void showMenuOption() {

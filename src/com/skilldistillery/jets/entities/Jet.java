@@ -75,8 +75,8 @@ public abstract class Jet {
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ":\t[ID: " + ID + "]  [Model: " + model + "]   [Speed: " + speed
-				+ "]  [Range: " + range + "]  [Price: " + price + "]\n" + pilot;
+		return this.getClass().getSimpleName() + ":\t[ID: " + ID + " | Model: " + model + " | Speed: " + speed
+				+ " | Range: " + range + " | Price: " + price + "]\n\t" + pilot;
 	}
 
 	@Override

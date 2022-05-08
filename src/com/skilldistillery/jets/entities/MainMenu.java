@@ -2,8 +2,11 @@ package com.skilldistillery.jets.entities;
 
 import java.util.Scanner;
 
+import com.skilldistillery.jets.app.JetsApplication;
+
 public class MainMenu {
 	private SubMenu submenu = new SubMenu();
+	
 
 	public void printMenu() {
 		System.out.println("-----------------------------------------------");
@@ -15,7 +18,7 @@ public class MainMenu {
 
 	}
 
-	public boolean menuSwitch(AirField airfield, String input, Scanner sc) {
+	public boolean menuSwitch(AirField airfield, String input, Scanner sc, JetsApplication app) {
 		boolean isSelecting = true;
 		switch (input) {
 
@@ -23,8 +26,7 @@ public class MainMenu {
 		case "jet menu":
 		case "view jet menu":
 			submenu.printJetMenu();
-			while (submenu.jetMenuSwitch(airfield, sc.nextLine(), sc))
-				;
+			submenu.jetMenuSwitch(airfield, sc, app);
 			printMenu();
 			break;
 
@@ -33,7 +35,7 @@ public class MainMenu {
 		case "dogfiiiiiight!!":
 		case "fight":
 		case "fight!":
-			airfield.dogfight();
+			app.dogfight();
 			printMenu();
 			break;
 
@@ -41,7 +43,7 @@ public class MainMenu {
 		case "hire pilot":
 		case "new pilot":
 		case "hire new pilot":
-			airfield.hirePilot(sc, submenu);
+			app.hirePilot(sc, submenu);
 			printMenu();
 			break;
 
@@ -59,7 +61,7 @@ public class MainMenu {
 		case "copy":
 			System.out.println("What is the name of the file? (Please do not use the name jets.txt)");
 			String fileName = sc.nextLine();
-			if (airfield.createCopy(fileName)) {
+			if (app.createCopy(fileName)) {
 				System.out.println("Printed to: " + fileName);
 			}
 			printMenu();
